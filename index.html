@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Energy Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        header {
+            background: #E6F3FF;
+            color: #fff;
+            padding: 10px 20px; 
+            display: flex;
+            align-items: center; 
+            justify-content: flex-start; 
+        }
+        header img {
+            height: 50px; 
+            margin-right: 15px; 
+        }
+        header h1 {
+            margin: 0; 
+            color: #0c253e; 
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #0c253e;
+        }
+        .features, .openadr, .api, .github, .contact {
+            margin-bottom: 40px;
+        }
+        .api pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-left: 3px solid #007BFF;
+            overflow-x: auto;
+        }
+        a {
+            color: #007BFF; 
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="Aouf.png" alt="Logo"> 
+
+    </header>
+    <div class="container">
+        <section class="overview">
+            <h2>Overview</h2>
+            <p>The <strong>Smart Energy Management System</strong> leverages machine learning and OpenADR protocols to predict energy demand, optimize production, and automate decision-making. This project integrates predictive analytics with demand-response mechanisms to ensure efficient energy management.</p>
+        </section>
+
+        <section class="features">
+            <h2>Features</h2>
+            <ul>
+                <li><strong>Energy Demand Prediction:</strong> Utilizes Random Forest regression to forecast daily energy demand based on environmental factors.</li>
+                <li><strong>Threshold Setting:</strong> Establishes dynamic thresholds for energy production optimization.</li>
+                <li><strong>Demand-Response System:</strong> Implements OpenADR protocols for automated production adjustments.</li>
+                <li><strong>Interactive Dashboard:</strong> Provides real-time visualization of predictions and system decisions.</li>
+            </ul>
+        </section>
+
+        <section class="openadr">
+            <h2>OpenADR Implementation</h2>
+            <h3>VTN (Virtual Top Node)</h3>
+            <p>The VTN is responsible for sending signals to VENs based on predicted energy demand.</p>
+            <pre><code>class VTN:
+    def __init__(self):
+        self.signals = []
+
+    def send_signal(self, ven_id, action, adjustment):
+        signal = {"ven_id": ven_id, "action": action, "adjustment": adjustment}
+        self.signals.append(signal)
+        print(f"Signal sent to VEN {ven_id}: {action} with {adjustment}")
+        return signal</code></pre>
+
+            <h3>VEN (Virtual End Node)</h3>
+            <p>The VEN receives and processes signals from the VTN to adjust energy production.</p>
+            <pre><code>class VEN:
+    def __init__(self, ven_id):
+        self.ven_id = ven_id
+
+    def receive_signal(self, signal):
+        if signal["ven_id"] == self.ven_id:
+            print(f"VEN {self.ven_id} received signal: {signal['action']} - {signal['adjustment']}")
+        else:
+            print(f"Signal not intended for VEN {self.ven_id}")</code></pre>
+
+            <h3>Example Workflow</h3>
+            <pre><code>vtn = VTN()
+ven = VEN(ven_id="client_1")
+
+# Simulate a prediction and decision
+predicted_demand = 1050 
+threshold = 1000
+
+if predicted_demand > threshold:
+    action = "Raise Production"
+    adjustment = f"Increase production by {predicted_demand - threshold:.2f} MW"
+else:
+    action = "Optimize Production"
+    adjustment = f"Reduce production by {threshold - predicted_demand:.2f} MW"
+
+# VTN sends signal to VEN
+signal = vtn.send_signal(ven.ven_id, action, adjustment)
+
+# VEN processes the signal
+ven.receive_signal(signal)</code></pre>
+        </section>
+
+        <section class="api">
+            <h2>API Documentation</h2>
+            <h3>Endpoints</h3>
+            <ul>
+                <li><strong>GET /predict</strong> - Returns the predicted energy demand.</li>
+                <li><strong>POST /adjust</strong> - Sends a signal to adjust energy production.</li>
+            </ul>
+            <h3>Example Requests</h3>
+            <pre><code>curl -X GET http://localhost:5000/predict
+curl -X POST http://localhost:5000/predict -d '{"action": "Raise Production", "adjustment": "50 MW"}'</code></pre>
+        </section>
+
+        <section class="github">
+            <h2>GitHub Repository</h2>
+            <p>Explore the code and contribute to the project on GitHub: <a href="https://github.com/AoufNihed/OpenADR.git" target="_blank">OpenADR Repository</a></p>
+        </section>
+
+        <section class="contact">
+            <h2>Contact</h2>
+            <p>For more information, contact: <a href="mailto:aouf_nihed@esgee-oran.dz">aouf_nihed@esgee-oran.dz</a></p>
+        </section>
+    </div>
+</body>
+</html>
